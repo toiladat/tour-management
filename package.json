@@ -12,6 +12,9 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "mysql2": "^3.11.3",
+    "pug": "^3.0.3",
+    "sequelize": "^6.37.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   },
