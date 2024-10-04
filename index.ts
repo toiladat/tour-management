@@ -1,8 +1,11 @@
 import express, { Express,Request,Response } from "express";
-import sequelize from "./configs/database";
 import dotenv from 'dotenv'
-import { clientRoute } from "./routes/client/index.route";
+
 dotenv.config()
+import sequelize from "./configs/database";
+
+import { clientRoute } from "./routes/client/index.route";
+
 const app:Express=express()
 const port:number|String=3000
 
