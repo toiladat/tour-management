@@ -1,4 +1,5 @@
-import { DataType, DataTypes } from "sequelize";
+
+import { DataTypes } from "sequelize";
 import sequelize from "../configs/database";
 
 const Tour = sequelize.define("Tour", {
@@ -6,29 +7,56 @@ const Tour = sequelize.define("Tour", {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   title: {
     type: DataTypes.STRING(255),
-    allowNull: false
+    allowNull: false,
   },
-  code: DataTypes.STRING(10),
-  images: DataTypes.TEXT("long"),
-  price: DataTypes.INTEGER,
-  discout: DataTypes.INTEGER,
-  information: DataTypes.TEXT('long'),
-  schedule: DataTypes.TEXT("long"),
-  timeStart: DataTypes.DATE,
-  stock: DataTypes.INTEGER,
-  status: DataTypes.STRING(20),
-  position: DataTypes.INTEGER,
+  code: {
+    type: DataTypes.STRING(10),
+  },
+  images: {
+    type: DataTypes.TEXT('long'),
+  },
+  price: {
+    type: DataTypes.INTEGER,
+  },
+  discount: {
+    type: DataTypes.INTEGER,
+  },
+  information: {
+    type: DataTypes.TEXT('long'),
+  },
+  schedule: {
+    type: DataTypes.TEXT('long'),
+  },
+  timeStart: {
+    type: DataTypes.DATE,
+  },
+  stock: {
+    type: DataTypes.INTEGER,
+  },
+  status: {
+    type: DataTypes.STRING(20),
+  },
+  position: {
+    type: DataTypes.INTEGER,
+  },
   slug: {
     type: DataTypes.STRING(255),
-    allowNull: false
+    allowNull: false,
   },
-  deleted: DataTypes.DATE,
+  deleted: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false, // Đặt giá trị mặc định là false
+  },
+  deletedAt: {
+    type: DataTypes.DATE,
+  },
 }, {
-  tableName: 'tours', // ten trong csdl
-  timestamps: true// quan ly createdAt va updatedAt
-})
-export default Tour
+  tableName: 'tours',
+  timestamps: true, // Tự động quản lý createdAt và updatedAt
+});
+
+export default Tour;

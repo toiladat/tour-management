@@ -1,7 +1,7 @@
 import { error } from "console";
 import { Sequelize } from "sequelize";
  const sequelize = new Sequelize(
-  process.env.DATABASE_NAME, //ten db
+  'tour_db', //ten db
   'root', // username
   process.env.DATABSE_PASSWORD,//password
   {
