@@ -5,15 +5,11 @@ block main
     .row
       .col-12
         +box-head(pageTitle)
-    .row
-      each item in tours
+      each item in categories
         .col-6.mb-3
           div(class="card")
             .card-image
               img(src=item.image)
             div(class="card-body")
               h5(class="card-title") #{item.title}
-              b(class="mr-2 mb-2") #{item.price_special.toLocaleString()}đ
-              del(class="mb-2") #{item.price.toLocaleString()}đ
-              p(class="font-weight-bold") Giảm #{item.discount}%
-              a(href=`/tours/detail/${item.slug}` class="btn btn-primary") Xem chi tiết
+              a(href=`/tours/${item.slug}` class="btn btn-primary") Xem chi tiết
