@@ -1,4 +1,3 @@
-
 // cart variable nay chỉ được khởi tạo 1 lần duy nhất
 // khi submit thì sẽ k còn nữa
 const cart = localStorage.getItem('cart');
@@ -19,17 +18,41 @@ const alertAddCartSuccess = () => {
 }
 // end alert add to cart
 
+
+// update quantity tour
+const updateQuantityTour = () => {
+  const listInputQuantity = document.querySelectorAll("input[name='quantity']")
+  if (listInputQuantity.length > 0) {
+    listInputQuantity.forEach(input => {
+      input.addEventListener('change', () => {
+        const tourId = input.getAttribute('item-id')
+        const quantity = input.value;
+
+        const cart = JSON.parse(localStorage.getItem('cart'))
+        const changedTour = cart.find(tour => tour.id == tourId)
+        if (changedTour) {
+          changedTour.quantity = quantity
+          localStorage.setItem('cart', JSON.stringify(cart))
+          window.location.reload()
+        }
+      })
+    })
+  }
+}
+// end update quantity tour
+
+
 // delete tour in cart
 const deleteTours = () => {
   const deleteBtnList = document.querySelectorAll('[btn-delete]')
   if (deleteBtnList.length > 0) {
     deleteBtnList.forEach(btn => {
       btn.addEventListener('click', () => {
-        const idTour=btn.getAttribute('btn-delete')
-        const cart=JSON.parse(localStorage.getItem('cart'))
+        const idTour = btn.getAttribute('btn-delete')
+        const cart = JSON.parse(localStorage.getItem('cart'))
 
-        const newCart=cart.filter(tour=>tour.id!=idTour)
-        localStorage.setItem('cart',JSON.stringify(newCart))
+        const newCart = cart.filter(tour => tour.id != idTour)
+        localStorage.setItem('cart', JSON.stringify(newCart))
         window.location.reload()
       })
     })
@@ -129,6 +152,7 @@ if (tableCart) {
       totalElement.innerHTML = data.total.toLocaleString()
 
       deleteTours()
+      updateQuantityTour()
     })
 
 }
