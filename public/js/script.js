@@ -12,6 +12,17 @@ const alertAddCartSuccess = () => {
 }
 // end alert add to cart
 
+//show total tours in cart
+const showTotalTour = () => {
+  const miniCart = document.querySelector('[mini-cart]')
+  if (miniCart) {
+    const totalTour = JSON.parse(localStorage.getItem('cart')).length
+    miniCart.innerHTML = totalTour
+  }
+}
+// goi lan dau khi load
+showTotalTour();
+//end show total tours in cart
 
 // tour-images
 const tourImages = document.querySelector(".tour-images");
@@ -49,6 +60,7 @@ if (formAddToCart) {
         })
       localStorage.setItem('cart', JSON.stringify(cart))
       alertAddCartSuccess();
+      showTotalTour();
     }
   })
 }
