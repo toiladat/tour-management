@@ -1,5 +1,12 @@
-//alert add to cart
 
+// cart variable nay chỉ được khởi tạo 1 lần duy nhất
+// khi submit thì sẽ k còn nữa
+const cart = localStorage.getItem('cart');
+if (!cart) {
+  localStorage.setItem('cart', JSON.stringify([]));
+}
+
+//alert add to cart
 const alertAddCartSuccess = () => {
   const elementAlert = document.querySelector('[alert-add-cart-susscess]')
   if (elementAlert) {
@@ -11,6 +18,24 @@ const alertAddCartSuccess = () => {
   }
 }
 // end alert add to cart
+
+// delete tour in cart
+const deleteTours = () => {
+  const deleteBtnList = document.querySelectorAll('[btn-delete]')
+  if (deleteBtnList.length > 0) {
+    deleteBtnList.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idTour=btn.getAttribute('btn-delete')
+        const cart=JSON.parse(localStorage.getItem('cart'))
+
+        const newCart=cart.filter(tour=>tour.id!=idTour)
+        localStorage.setItem('cart',JSON.stringify(newCart))
+        window.location.reload()
+      })
+    })
+  }
+}
+//end delete tour in cart
 
 //show total tours in cart
 const showTotalTour = () => {
@@ -33,12 +58,7 @@ if (tourImages) {
 
 //Cart
 
-// cart variable nay chỉ được khởi tạo 1 lần duy nhất
-// khi submit thì sẽ k còn nữa
-const cart = localStorage.getItem('cart');
-if (!cart) {
-  localStorage.setItem('cart', JSON.stringify([]));
-}
+
 const formAddToCart = document.querySelector('[form-add-to-cart]')
 if (formAddToCart) {
   formAddToCart.addEventListener('submit', e => {
@@ -65,3 +85,52 @@ if (formAddToCart) {
   })
 }
 //End cart
+
+// show tour in cart
+const tableCart = document.querySelector('[table-cart]')
+if (tableCart) {
+  const tours = localStorage.getItem('cart')
+  fetch('/cart/list-json', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: tours
+    })
+    .then(res => res.json())
+    .then(data => {
+      const htmlArray = data.tours.map((item, index) => `
+    <tr>
+      <td>${index + 1}</td>
+      <td>
+        <img src="${item.image}" alt="${item.title}" width="80px" />
+      </td>
+      <td>
+        <a href="/tours/detail/${item.slug}">${item.title}</a>
+      </td>
+      <td>
+        ${item.price.toLocaleString()}đ
+      </td>
+      <td>
+        <input type="number" name="quantity" value="${item.quantity}" min="1" item-id="${item.id}" style="width: 60px;" />
+      </td>
+      <td>
+        ${item.total.toLocaleString()}đ
+      </td>
+      <td>
+        <button class="btn btn-sm btn-danger" btn-delete="${item.id}">Xóa</button>
+      </td>
+    </tr>
+  `);
+      const tbody = tableCart.querySelector('tbody')
+      tbody.innerHTML = htmlArray.join(" ");
+
+      const totalElement = document.querySelector('[total-price]')
+      totalElement.innerHTML = data.total.toLocaleString()
+
+      deleteTours()
+    })
+
+}
+
+//end show tour in cart
