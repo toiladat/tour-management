@@ -124,4 +124,9 @@
   max-width: 100%;
   height: auto;
 }
+.inner-image img{
+  height: 100%;
+  width:auto,
+  
+}
 /* End tour-detail */
