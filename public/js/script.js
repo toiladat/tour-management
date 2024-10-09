@@ -158,3 +158,35 @@ if (tableCart) {
 }
 
 //end show tour in cart
+
+// submit form pick tour
+const formOrder = document.querySelector('[form-order]')
+if (formOrder) {
+  formOrder.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const cart = JSON.parse(localStorage.getItem('cart'))
+    const data = {
+      infor: {
+        fullName: formOrder.fullName.value,
+        phone: formOrder.phone.value,
+        note: formOrder.note.value
+      },
+      cart: cart
+    }
+    fetch('/orders',{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(data)
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      if(data.code==200){
+        window.location.href=`/orders/success/${data.orderCode}`
+      }
+    })
+  })
+}
+// end submit form pick tour
