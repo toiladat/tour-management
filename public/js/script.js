@@ -184,6 +184,7 @@ if (formOrder) {
     .then(res=>res.json())
     .then(data=>{
       if(data.code==200){
+        localStorage.setItem('cart',JSON.stringify([]))
         window.location.href=`/orders/success/${data.orderCode}`
       }
     })
